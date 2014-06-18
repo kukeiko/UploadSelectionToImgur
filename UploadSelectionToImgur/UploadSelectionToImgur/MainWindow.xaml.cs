@@ -112,12 +112,6 @@ namespace UploadSelectionToImgur
 
             switch (key)
             {
-                case Key.Enter:
-                    var imageId = await this.UploadCurrentSelection();
-                    this.Imgur.OpenImageInBrowser(imageId);
-                    this.Close();
-                    break;
-
                 case Key.Space:
                     this.ActiveTool = App.Tool.Mover;
                     break;
@@ -135,6 +129,17 @@ namespace UploadSelectionToImgur
         void KeyUpped(object sender, KeyEventArgs e)
         {
             this.ActiveTool = App.Tool.Snipper;
+			
+			var key = e.Key == Key.System ? e.SystemKey : e.Key;
+			
+			switch (key)
+            {
+                case Key.Enter:
+                    var imageId = await this.UploadCurrentSelection();
+                    this.Imgur.OpenImageInBrowser(imageId);
+                    this.Close();
+                    break;
+            }
         }
 
         void MouseMoved(object sender, MouseEventArgs e)
